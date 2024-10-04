@@ -3,9 +3,8 @@ package main
 import (
 	"log"
 	"os"
-	"strings"
 
-	"LoggerBot/commands"
+	"LoggerBot/listeners"
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/joho/godotenv"
@@ -28,7 +27,7 @@ func main()  {
 		return
 	}
 
-	bot.AddHandler(messageCreate)
+	listeners.RegisterListeners(bot)
 
 	err = bot.Open()
 	if err != nil {
@@ -37,19 +36,4 @@ func main()  {
 
 	log.Println("INFO: Connected as", bot.State.User.Username, "#", bot.State.User.Discriminator)
 	select {}
-}
-
-func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
-	if (m.Author.ID == s.State.User.ID || !strings.HasPrefix(m.Content, os.Getenv("PREFIX"))) {
-		return
-	}
-
-	cmd := m.Content[1:]
-
-	switch {
-	case strings.HasPrefix(cmd, "ping"):
-		commands.Ping(s, m)
-	case strings.HasPrefix(cmd, "echo"):
-		commands.Echo(s, m)
-	}
 }
