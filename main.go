@@ -2,38 +2,20 @@ package main
 
 import (
 	"log"
-	"os"
 
-	"LoggerBot/listeners"
-
-	"github.com/bwmarrin/discordgo"
-	"github.com/joho/godotenv"
+	"EventHorizon/internal/bot"
 )
 
-func main()  {
-	err := godotenv.Load()
-    if err != nil {
-        log.Fatalf("ERROR: Can't load .env file")
-    }
-	
-	token := os.Getenv("DISCORD_TOKEN")
-    if token == "" {
-        log.Fatalf("ERROR: Missing token")
-    }
-
-	bot, err := discordgo.New("Bot " + token)
+func main() {
+	botSession, err := bot.Initialize()
 	if err != nil {
-		log.Fatal("ERROR: Failed to create bot", err)
-		return
+		log.Fatal(err)
 	}
 
-	listeners.RegisterListeners(bot)
-
-	err = bot.Open()
+	err = bot.OpenBot(botSession)
 	if err != nil {
-		log.Fatal("ERROR: Failed to connect", err)
+		log.Fatal(err)
 	}
 
-	log.Println("INFO: Connected as", bot.State.User.Username, "#", bot.State.User.Discriminator)
 	select {}
 }

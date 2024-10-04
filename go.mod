@@ -1,4 +1,4 @@
-module LoggerBot
+module EventHorizon
 
 go 1.23.1
 

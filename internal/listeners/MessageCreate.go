@@ -1,7 +1,7 @@
 package listeners
 
 import (
-	"LoggerBot/commands"
+	"EventHorizon/internal/commands"
 	"os"
 	"strings"
 
