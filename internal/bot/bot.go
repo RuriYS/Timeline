@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"EventHorizon/internal/listeners"
+	"Timeline/internal/listeners"
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/joho/godotenv"
@@ -38,6 +38,6 @@ func OpenBot(bot *discordgo.Session) error {
 		return fmt.Errorf("ERROR: Failed to connect: %w", err)
 	}
 
-	log.Println("INFO: Connected as", fmt.Sprintf("%s#%s", bot.State.User.Username, bot.State.User.Discriminator))
+	log.Println("INFO: Connected")
 	return nil
 }
