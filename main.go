@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"EventHorizon/internal/bot"
+	"Timeline/internal/bot"
 )
 
 func main() {

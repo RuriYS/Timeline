@@ -1,6 +1,6 @@
-# EventHorizon
+# Timeline
 
-EventHorizon is a Discord bot built with [DiscordGO](https://github.com/bwmarrin/discordgo) that logs all activities within your Discord server and saves it to a database. This project is currently a work in progress (WIP) and aims to provide robust logging capabilities to help server administrators keep track of events, messages, and user activities.
+Timeline is a Discord bot built with [DiscordGO](https://github.com/bwmarrin/discordgo) that logs all activities within your Discord server and saves it to a database. This project is currently a work in progress (WIP) and aims to provide robust logging capabilities to help server administrators keep track of events, messages, and user activities.
 
 ## Features
 
@@ -17,12 +17,12 @@ EventHorizon is a Discord bot built with [DiscordGO](https://github.com/bwmarrin
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/RuriYoshinova/EventHorizon.git
+   git clone https://github.com/RuriYoshinova/Timeline.git
    ```
 
 2. **Navigate to the Directory**:
    ```bash
-   cd EventHorizon
+   cd Timeline
    ```
 
 3. **Install Dependencies**:
@@ -49,7 +49,7 @@ EventHorizon is a Discord bot built with [DiscordGO](https://github.com/bwmarrin
 
 ## Contributing
 
-Contributions are welcome! If you'd like to contribute to EventHorizon, please follow these steps:
+Contributions are welcome! If you'd like to contribute to Timeline, please follow these steps:
 
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature/YourFeature`).
