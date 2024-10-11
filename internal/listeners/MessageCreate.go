@@ -1,7 +1,7 @@
 package listeners
 
 import (
-	"EventHorizon/internal/commands"
+	"Timeline/internal/commands"
 	"os"
 	"strings"
 
