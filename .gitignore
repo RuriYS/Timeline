@@ -1,2 +1,7 @@
+.artifacts
 .env
+artifact.sh
+Timeline
+artifacts/
 vendor/
+logs/
