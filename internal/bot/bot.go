@@ -2,10 +2,10 @@ package bot
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"Timeline/internal/listeners"
+	"Timeline/internal/logger"
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/joho/godotenv"
@@ -14,17 +14,17 @@ import (
 func Initialize() (*discordgo.Session, error) {
 	err := godotenv.Load()
 	if err != nil {
-		return nil, fmt.Errorf("ERROR: Can't load .env file: %w", err)
+		return nil, err
 	}
 
 	token := os.Getenv("DISCORD_TOKEN")
 	if token == "" {
-		return nil, fmt.Errorf("ERROR: Missing token")
+		return nil, fmt.Errorf("missing token")
 	}
 
 	bot, err := discordgo.New("Bot " + token)
 	if err != nil {
-		return nil, fmt.Errorf("ERROR: Failed to create bot: %w", err)
+		return nil, err
 	}
 
 	listeners.RegisterListeners(bot)
@@ -33,11 +33,12 @@ func Initialize() (*discordgo.Session, error) {
 }
 
 func OpenBot(bot *discordgo.Session) error {
+	l := logger.GetLogger()
 	err := bot.Open()
 	if err != nil {
-		return fmt.Errorf("ERROR: Failed to connect: %w", err)
+		return err
 	}
 
-	log.Println("INFO: Connected")
+	l.Debug("Connected")
 	return nil
 }

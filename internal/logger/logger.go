@@ -75,7 +75,7 @@ func (l *Logger) log(level LogLevel, format string, args ...interface{}) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
 
-	timestamp := time.Now().Format("15:04:05.000")
+	timestamp := time.Now().Format("2006-01-02 15:04:05")
 	logMessage := strings.ReplaceAll(fmt.Sprintf(format, args...), "\n", "\\n")
 
 	var colorCode string
@@ -96,12 +96,12 @@ func (l *Logger) log(level LogLevel, format string, args ...interface{}) {
 		levelStr = "ERROR"
 	}
 
-	consoleLog := fmt.Sprintf("[%s] %s%s: %s%s\n",
+	consoleLog := fmt.Sprintf("%s %s[%s]%s %s\n",
 		timestamp,
 		colorCode,
 		levelStr,
-		logMessage,
 		colorReset,
+		logMessage,
 	)
 
 	fileLog := fmt.Sprintf("[%s] %s: %s\n",
