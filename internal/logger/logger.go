@@ -37,7 +37,6 @@ type Logger struct {
 var instance *Logger
 var once sync.Once
 
-
 func NewLogger(level LogLevel, useColors bool) *Logger {
 	once.Do(func() {
 		instance = newLogger()
