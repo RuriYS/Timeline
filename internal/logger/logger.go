@@ -104,7 +104,7 @@ func (l *Logger) log(level LogLevel, format string, args ...interface{}) {
 		logMessage,
 	)
 
-	fileLog := fmt.Sprintf("[%s] %s: %s\n",
+	fileLog := fmt.Sprintf("%s [%s] %s\n",
 		timestamp,
 		levelStr,
 		logMessage,
