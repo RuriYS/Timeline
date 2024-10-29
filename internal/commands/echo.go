@@ -7,11 +7,11 @@ import (
 )
 
 func Echo(s *discordgo.Session, m *discordgo.MessageCreate) {
-    content := strings.SplitN(m.Content, " ", 2)
-    if len(content) < 2 {
-        s.ChannelMessageSend(m.ChannelID, "Please provide a message to echo!")
-        return
-    }
+	content := strings.SplitN(m.Content, " ", 2)
+	if len(content) < 2 {
+		s.ChannelMessageSend(m.ChannelID, "Please provide a message to echo!")
+		return
+	}
 
-    s.ChannelMessageSend(m.ChannelID, content[1])
+	s.ChannelMessageSend(m.ChannelID, content[1])
 }

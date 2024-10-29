@@ -16,7 +16,7 @@ func Initialize() (*discordgo.Session, error) {
 	if err != nil {
 		return nil, fmt.Errorf("ERROR: Can't load .env file: %w", err)
 	}
-	
+
 	token := os.Getenv("DISCORD_TOKEN")
 	if token == "" {
 		return nil, fmt.Errorf("ERROR: Missing token")
