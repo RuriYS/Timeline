@@ -1,9 +1,12 @@
+// bot.go
 package bot
 
 import (
+	"context"
 	"fmt"
 	"os"
 
+	"Timeline/internal/database"
 	"Timeline/internal/listeners"
 	"Timeline/internal/logger"
 
@@ -11,7 +14,19 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func Initialize() (*discordgo.Session, error) {
+type Client struct {
+	Session  *discordgo.Session
+	Database *database.Database
+	Logger   *logger.Logger
+}
+
+func (c *Client) GetDatabase() *database.Database {
+	return c.Database
+}
+
+func Initialize() (*Client, error) {
+	l := logger.GetLogger()
+
 	err := godotenv.Load()
 	if err != nil {
 		return nil, err
@@ -22,23 +37,47 @@ func Initialize() (*discordgo.Session, error) {
 		return nil, fmt.Errorf("missing token")
 	}
 
-	bot, err := discordgo.New("Bot " + token)
+	l.Debug("Initializing MongoDB")
+	mongoURI := os.Getenv("MONGO_URI")
+	if mongoURI == "" {
+		mongoURI = "mongodb://localhost:27017"
+	}
+
+	db, err := database.Initialize(mongoURI)
+	if err != nil {
+		return nil, fmt.Errorf("failed to initialize database: %w", err)
+	}
+
+	session, err := discordgo.New("Bot " + token)
 	if err != nil {
 		return nil, err
 	}
 
-	listeners.RegisterListeners(bot)
+	bot := &Client{
+		Session:  session,
+		Database: db,
+		Logger:   logger.GetLogger(),
+	}
+
+	listeners.RegisterListeners(bot, session)
 
 	return bot, nil
 }
 
-func OpenBot(bot *discordgo.Session) error {
-	l := logger.GetLogger()
-	err := bot.Open()
+func (c *Client) Open() error {
+	logger.GetLogger().Debug("Connecting to Discord")
+	err := c.Session.Open()
 	if err != nil {
 		return err
 	}
-
-	l.Debug("Connected")
 	return nil
+}
+
+func (c *Client) Close() error {
+	logger.GetLogger().Debug("Closing database")
+	ctx := context.Background()
+	if err := c.Database.Close(ctx); err != nil {
+		c.Logger.Error("Failed to close database: %v", err)
+	}
+	return c.Session.Close()
 }

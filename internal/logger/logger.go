@@ -37,14 +37,17 @@ type Logger struct {
 var instance *Logger
 var once sync.Once
 
-func GetLogger() *Logger {
+
+func NewLogger(level LogLevel, useColors bool) *Logger {
 	once.Do(func() {
-		instance = NewLogger()
+		instance = newLogger()
+		instance.SetLogLevel(level)
+		instance.SetUseColors(useColors)
 	})
 	return instance
 }
 
-func NewLogger() *Logger {
+func newLogger() *Logger {
 	err := os.MkdirAll("logs", 0755)
 	if err != nil {
 		fmt.Printf("Error creating logs directory: %v\n", err)
@@ -65,6 +68,13 @@ func NewLogger() *Logger {
 		logLevel:  INFO,
 		useColors: true,
 	}
+}
+
+func GetLogger() *Logger {
+	once.Do(func() {
+		instance = newLogger()
+	})
+	return instance
 }
 
 func (l *Logger) log(level LogLevel, format string, args ...interface{}) {
