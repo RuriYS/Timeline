@@ -37,11 +37,9 @@ func Initialize() (*Client, error) {
 		return nil, fmt.Errorf("missing token")
 	}
 
-	l.Debug("Initializing MongoDB")
 	mongoURI := os.Getenv("MONGO_URI")
-	if mongoURI == "" {
-		mongoURI = "mongodb://localhost:27017"
-	}
+	l.Debug("Connecting to MongoDB: " + mongoURI)
+	// mongoURI := "mongodb://timeline:timeline@localhost:27017"
 
 	db, err := database.Initialize(mongoURI)
 	if err != nil {
